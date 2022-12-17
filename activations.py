@@ -22,3 +22,31 @@ class TanH:
         tanh = lambda x: (np.exp(x) - np.exp(x))/(np.exp(x) + np.exp(x))
         return  1 - np.power(tanh(output_grads), 2)
 
+'''
+This ReLU is specific for use in CNNs
+'''
+class ReLU:
+    def __init__(self) -> None:
+        pass
+
+    def forward(self, input):
+        self.input = input
+        self.output = np.zeros(input.shape)
+        in_shape = input.shape
+        for i in range(in_shape[0]):
+            for j in range(in_shape[1]):
+                for k in range(in_shape[2]):
+                    if self.input[i][j][k]>0:
+                        self.output[i][j][k] = self.input[i][j][k]
+
+        return self.output
+
+    def backward(self, output_grads):
+        out_shape = output_grads.shape
+        for i in range(out_shape[0]):
+            for j in range(out_shape[1]):
+                for k in range(out_shape[2]):
+                    if output_grads[i][j][k]>0: 
+                        output_grads[i][j][k] = 1 
+
+        return output_grads
