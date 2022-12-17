@@ -4,7 +4,7 @@ from scipy import signal
 import math
 
 class Conv(Layer):
-    def __init__(self, input_shape, out_channels, padding, kernel_size, stride, bias = True):
+    def __init__(self, input_shape, out_channels, kernel_size, padding=0, stride=1, bias = True):
         super().__init__()
         self.input_shape = input_shape
         self.in_channels = input_shape[0]
