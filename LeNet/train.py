@@ -28,7 +28,7 @@ def train(lr=0.01, epochs=1000):
             #backward porp
             backward(loss_prime(y, out), lr)
         error = error/len(x_train)
-        print(f"{epoch}/{epochs} loss : {error}.:4f")
+        print(f"{epoch+1}/{epochs} loss : {error:4f}")
     
 
 
