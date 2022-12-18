@@ -1,8 +1,16 @@
 import numpy as np
 
-a = np.random.randn(3, 3, 3)
 
-b = [a if a>0 else 0]
+# Hyperparameters
 
-print(a)
-print(b)
+epochs = 100
+lr = 0.01
+
+x_train = np.random.randn(100, 3, 28, 28)
+y = np.random.randint(0, 10, size=(100))
+y_train = np.zeros((y.shape[0], 10))
+
+for i in range(100):
+    y_train[i][y[i]] = 1
+
+print(y_train)

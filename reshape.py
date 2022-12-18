@@ -8,5 +8,5 @@ class Reshape:
     def forward(self, input):
         return np.reshape(input, self.out_shape)
 
-    def backward(self, output_grads):
+    def backward(self, output_grads,learning_rate):
         return np.reshape(output_grads, self.in_shape)

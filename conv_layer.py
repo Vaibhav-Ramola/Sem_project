@@ -6,15 +6,15 @@ import math
 class Conv(Layer):
     def __init__(self, input_shape, out_channels, kernel_size, padding=0, stride=1, bias = True):
         super().__init__()
+        shape = math.floor(
+            (input_shape[1] + 2*padding - kernel_size)/stride
+            ) + 1
         self.input_shape = input_shape
         self.in_channels = input_shape[0]
         self.out_channels = out_channels
         self.padding = padding
         self.stride = stride
         self.kernel_size = kernel_size
-        shape = math.floor(
-            (input.shape[0] + 2*self.padding - self.kernel_size)/self.stride
-            ) + 1
         self.output_shape = (out_channels ,shape, shape)
         
         '''

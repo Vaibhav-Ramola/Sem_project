@@ -4,12 +4,17 @@ class Sigmoid:
     def __init__(self):
         pass
 
+    @staticmethod
+    def sigmoid(x):
+        return 1/(1+np.exp(-x));
+
     def forward(self, input):
         return 1/(1+np.exp(-input))
 
     def backward(self, output_grads, learning_rate):
-        sigmoid = lambda x: 1/(1+np.exp(x))
-        return sigmoid(output_grads)(1-sigmoid(output_grads))
+        x = self.sigmoid(output_grads)
+        x = x*(1-x)
+        return x
 
 class TanH:
     def __init__(self) -> None:
