@@ -1,10 +1,16 @@
+import sys
+
+sys.path.append('..')
+
+
 import numpy as np
 
-from ..dense import Dense
-from ..conv_layer import Conv
-from ..losses import cross_entropy, cross_entropy_prime
-from ..reshape import Reshape
-from ..activations import TanH, Sigmoid
+
+from dense import Dense
+from conv_layer import Conv
+from losses import cross_entropy, cross_entropy_prime
+from reshape import Reshape
+from activations import TanH, Sigmoid
 
 '''
 Network:
@@ -23,7 +29,7 @@ network = [
 ]
 
 def forward(input):
-    input = np.reshape(input, (3, -1, -1))
+    # input = np.reshape(input, (3, -1, -1))
     for layer in network:
         input = layer.forward(input)
     return input
