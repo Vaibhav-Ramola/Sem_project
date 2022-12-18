@@ -10,7 +10,7 @@ from dense import Dense
 from conv_layer import Conv
 from losses import cross_entropy, cross_entropy_prime
 from reshape import Reshape
-from activations import TanH, Sigmoid
+from activations import TanH, Sigmoid, ReLU
 
 '''
 Network:
@@ -18,9 +18,9 @@ Network:
 
 network = [
     Conv((1, 28, 28), 5, 3),
-    TanH(),
+    ReLU(),
     Conv((5, 26, 26), 10, 3),
-    TanH(),
+    ReLU(),
     Reshape((10, 24, 24), (10 * 24 * 24)),
     Dense(10 * 24 * 24, 100),
     Sigmoid(),
@@ -30,8 +30,10 @@ network = [
 
 def forward(input):
     # input = np.reshape(input, (3, -1, -1))
-    for layer in network:
+    for i, layer in enumerate(network):
         input = layer.forward(input)
+        # print(f"Layer : {i+1} \t shape : {input.shape}")    # uncomment to know shape after each layer
+        # print(input)    # uncomment to see output from each layer
     return input
     
 def backward(output_grads, learning_rate):

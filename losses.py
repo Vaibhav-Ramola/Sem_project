@@ -2,6 +2,13 @@ import numpy as np
 
 epsilon = 10e-8
 
+epsilon = 10e-8
+
+def softmax(input):
+    input = np.exp(input)
+    sum = np.sum(input)
+    return input/sum
+
 def mse(y_true, y_pred):
     return np.mean(np.power(y_true - y_pred, 2))
 
@@ -15,6 +22,7 @@ def binary_cross_entropy_prime(y_true, y_pred):
     return ((1 - y_true) / (1 - y_pred) - y_true / y_pred) / np.size(y_true)
 
 def cross_entropy(y_true, y_pred):
+    y_pred = softmax(y_pred)
     return  -np.sum(y_true*np.log(y_pred))
 
 def cross_entropy_prime(y_true, y_pred):

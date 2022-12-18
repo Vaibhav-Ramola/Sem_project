@@ -1,30 +1,34 @@
 import numpy as np
 
+eps = 10e-10
+
 class Sigmoid:
     def __init__(self):
         pass
 
-    @staticmethod
-    def sigmoid(x):
-        return 1/(1+np.exp(-x));
-
     def forward(self, input):
-        return 1/(1+np.exp(-input))
+        input = self.normalize(input)   # Normalization
+        return 1/(1+np.exp(-input) + eps)
 
     def backward(self, output_grads, learning_rate):
-        x = self.sigmoid(output_grads)
-        x = x*(1-x)
-        return x
+        sigmoid = lambda x: 1/(1+np.exp(x))
+        return sigmoid(output_grads)(1-sigmoid(output_grads))
 
 class TanH:
     def __init__(self) -> None:
         pass
+    
+    def normalize(self, input):
+        return input/np.max(np.abs(input))
 
     def forward(self, input):
-        return (np.exp(input) - np.exp(input))/(np.exp(input) + np.exp(input))
-
+        input = self.normalize(input)   # Normalizing the input
+        return (np.exp(input) - np.exp(-input))/(np.exp(input) + np.exp(-input) + eps)        # fixed the tanh activation function
+        # added eps to denominator to prevent devision by 0
+    
     def backward(self, output_grads, learning):
-        tanh = lambda x: (np.exp(x) - np.exp(x))/(np.exp(x) + np.exp(x))
+        output_grads = self.normalize(output_grads)     # Normalizing the output gradients
+        tanh = lambda x: (np.exp(x) - np.exp(-x))/(np.exp(x) + np.exp(-x) + eps)              # same fix of -ve sign here
         return  1 - np.power(tanh(output_grads), 2)
 
 '''
@@ -34,8 +38,12 @@ class ReLU:
     def __init__(self) -> None:
         pass
 
+
+    def normalize(self, input):
+        return input/np.max(np.abs(input))
+
     def forward(self, input):
-        self.input = input
+        input = self.normalize(input)           # Normalizing incomming inputs
         self.output = np.zeros(input.shape)
         in_shape = input.shape
         for i in range(in_shape[0]):
@@ -48,6 +56,7 @@ class ReLU:
 
     def backward(self, output_grads):
         out_shape = output_grads.shape
+        output_grads = self.normalize(output_grads)         # Normalizing incomming gradients
         for i in range(out_shape[0]):
             for j in range(out_shape[1]):
                 for k in range(out_shape[2]):
