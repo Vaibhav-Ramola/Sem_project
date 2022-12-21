@@ -6,11 +6,15 @@ class Sigmoid:
     def __init__(self):
         pass
 
+    def normalize(self, input):
+        return input/np.max(np.abs(input))
+    
     def forward(self, input):
         input = self.normalize(input)   # Normalization
         return 1/(1+np.exp(-input) + eps)
 
     def backward(self, output_grads, learning_rate):
+        output_grads = self.normalize(output_grads)     # Normalization
         sigmoid = lambda x: 1/(1+np.exp(x))
         return sigmoid(output_grads)(1-sigmoid(output_grads))
 
@@ -49,8 +53,8 @@ class ReLU:
         for i in range(in_shape[0]):
             for j in range(in_shape[1]):
                 for k in range(in_shape[2]):
-                    if self.input[i][j][k]>0:
-                        self.output[i][j][k] = self.input[i][j][k]
+                    if input[i][j][k]>0:
+                        self.output[i][j][k] = input[i][j][k]
 
         return self.output
 
