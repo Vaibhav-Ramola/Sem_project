@@ -15,8 +15,8 @@ class Sigmoid:
 
     def backward(self, output_grads, learning_rate):
         output_grads = self.normalize(output_grads)     # Normalization
-        sigmoid = lambda x: 1/(1+np.exp(x))
-        return sigmoid(output_grads)(1-sigmoid(output_grads))
+        sigmoid = lambda x: 1/(1+np.exp(-x))            # fixed
+        return sigmoid(output_grads) * (1-sigmoid(output_grads))    # fixed
 
 class TanH:
     def __init__(self) -> None:
@@ -30,7 +30,7 @@ class TanH:
         return (np.exp(input) - np.exp(-input))/(np.exp(input) + np.exp(-input) + eps)        # fixed the tanh activation function
         # added eps to denominator to prevent devision by 0
     
-    def backward(self, output_grads, learning):
+    def backward(self, output_grads, learning_rate):
         output_grads = self.normalize(output_grads)     # Normalizing the output gradients
         tanh = lambda x: (np.exp(x) - np.exp(-x))/(np.exp(x) + np.exp(-x) + eps)              # same fix of -ve sign here
         return  1 - np.power(tanh(output_grads), 2)
@@ -58,7 +58,7 @@ class ReLU:
 
         return self.output
 
-    def backward(self, output_grads):
+    def backward(self, output_grads, learning_rate):
         out_shape = output_grads.shape
         output_grads = self.normalize(output_grads)         # Normalizing incomming gradients
         for i in range(out_shape[0]):
