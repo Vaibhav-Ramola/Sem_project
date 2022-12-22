@@ -5,7 +5,7 @@ from losses import softmax
 
 # Hyperparameters
 
-epochs = 100
+epochs = 10
 lr = 0.01
 
 # Dataset MNIST
@@ -18,7 +18,8 @@ lr = 0.01
 # y = np.array(y[:1000])  # labels for 1000 samples
 # x_test = np.array(x_test[:1000]).reshape(-1, 1, 28, 28)
 # yy = np.array(yy[:1000])
-
+# x_train = x_train/np.max(np.abs(x_train))
+# x_test = x_test/np.max(np.abs(x_test))
 
 # y_train = np.zeros((y.shape[0], 10))
 # y_test = np.zeros((yy.shape[0], 10))
@@ -53,7 +54,7 @@ def train(lr=0.01, epochs=1000):
             #backward porp
             backward(loss_prime(y, out), lr)
         error = error/len(x_train)
-        print(f"{epoch+1}/{epochs} loss : {error:4f}")
+        print(f"epoch : {epoch+1}/{epochs} loss : {error:4f}")
 
 # Uncomment below function for testing
 
@@ -68,8 +69,8 @@ def train(lr=0.01, epochs=1000):
 
 
 if __name__ == '__main__':
-    train(lr=0.01, epochs=10)
-    # test()
+    train(lr=lr, epochs=epochs)
+    # test()            # uncomment to run the test function
 
             
 

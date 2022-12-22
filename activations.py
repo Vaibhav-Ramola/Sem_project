@@ -7,7 +7,7 @@ class Sigmoid:
         pass
 
     def normalize(self, input):
-        return input/np.max(np.abs(input))
+        return input/(np.max(np.abs(input)) + eps)      # to prevent division by 0
     
     def forward(self, input):
         input = self.normalize(input)   # Normalization
@@ -23,7 +23,7 @@ class TanH:
         pass
     
     def normalize(self, input):
-        return input/np.max(np.abs(input))
+        return input/(np.max(np.abs(input))+eps)
 
     def forward(self, input):
         input = self.normalize(input)   # Normalizing the input
@@ -44,7 +44,7 @@ class ReLU:
 
 
     def normalize(self, input):
-        return input/np.max(np.abs(input))
+        return input/(np.max(np.abs(input))+eps)
 
     def forward(self, input):
         input = self.normalize(input)           # Normalizing incomming inputs
